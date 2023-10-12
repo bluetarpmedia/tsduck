@@ -3,7 +3,9 @@
 
   <!-- A target to build tsduck.jar (Java bindings) -->
 
-  <ItemGroup>
+  <Target Name="BuildTSDuckJar" />
+
+  <!--<ItemGroup>
     <JavaSources Include="$(TSDuckRootDir)src\libtsduck\**\*.java;"/>
   </ItemGroup>
 
@@ -15,6 +17,6 @@
           Command='PowerShell "$(TSDuckRootDir)scripts\build-java.ps1" -NoPause'>
       <Output TaskParameter="ConsoleOutput" PropertyName="OutputOfExec"/>
     </Exec>
-  </Target>
+  </Target>-->
 
 </Project>
