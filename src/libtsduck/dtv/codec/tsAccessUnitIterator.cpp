@@ -284,7 +284,6 @@ bool ts::AccessUnitIterator::next()
     }
 
     // Memory patterns which are used between access units.
-    static const uint8_t Zero3[] = {0x00, 0x00, 0x00};
     static const uint8_t StartCodePrefix[] = {0x00, 0x00, 0x01};
 
     // Remaining size in data area.
