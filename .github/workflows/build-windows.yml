@@ -25,6 +25,9 @@ on:
         - Win64
         - Win32
         - Arm64
+  push:
+    branches:
+    - v3.41-4299-improved
 
 jobs:
   build:
