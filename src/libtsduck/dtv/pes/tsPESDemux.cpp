@@ -141,6 +141,10 @@ bool ts::PESDemux::allAC3(PID pid) const
     return pci != _pids.end() && pci->second.pes_count > 0 && pci->second.ac3_count == pci->second.pes_count;
 }
 
+void ts::PESDemux::setHandlerRequiredCallbacks(ContentCallbacks callbacks)
+{
+    _handler_callbacks = callbacks;
+}
 
 //----------------------------------------------------------------------------
 // Feed the demux with a TS packet.
@@ -444,6 +448,10 @@ void ts::PESDemux::handlePESPacket(const PESPacket& pes)
 
 void ts::PESDemux::handlePESContent(PIDContext& pc, const PESPacket& pes)
 {
+    if (_handler_callbacks == ContentCallbacks::None) {
+        return;
+    }
+
     // Packet payload content (constants).
     const uint8_t* const pl_data = pes.payload();
     const size_t pl_size = pes.payloadSize();
@@ -452,6 +460,10 @@ void ts::PESDemux::handlePESContent(PIDContext& pc, const PESPacket& pes)
     const size_t intra_offset = pes.findIntraImage();
     if (intra_offset != NPOS) {
         _pes_handler->handleIntraImage(*this, pes, intra_offset);
+    }
+
+    if (_handler_callbacks == ContentCallbacks::IntraOnly) {
+        return;
     }
 
     // Iterator on AVC/HEVC/VVC access units.

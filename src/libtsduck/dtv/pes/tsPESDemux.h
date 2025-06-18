@@ -157,6 +157,24 @@ namespace ts {
         //!
         bool allAC3(PID pid) const;
 
+        //!
+        //! Types of handler callbacks that the client may choose to receive.
+        //!
+        enum class ContentCallbacks {
+            None,       //!< handlePESPacket and handleInvalidPESPacket
+            IntraOnly,  //!< Above plus handleIntraImage
+            All         //!< All callbacks
+        };
+
+        //!
+        //! Sets which PESHandlerInterface content callbacks the client wants.
+        //! The `handlePESPacket` and `handleInvalidPESPacket` callbacks are always sent.
+        //! Demux performance can be improved significantly by skipping content callbacks,
+        //! or only returning intra frames.
+        //! @param [in] callbacks The required callbacks.
+        //!
+        void setHandlerRequiredCallbacks(ContentCallbacks callbacks);
+
     protected:
         //!
         //! This hook is invoked when a complete PES packet is available.
@@ -233,5 +251,6 @@ namespace ts {
         PIDContextMap        _pids {};
         PIDTypeMap           _pid_types {};
         SectionDemux         _section_demux;
+        ContentCallbacks     _handler_callbacks = ContentCallbacks::All;
     };
 }
