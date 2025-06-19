@@ -11,7 +11,7 @@
 #include "tsHEVC.h"
 #include "tsVVC.h"
 
-#ifdef _WIN64
+#if defined(_WIN64) && defined(_M_X64)
     #include <emmintrin.h>
 #endif
 
@@ -141,7 +141,7 @@ const uint8_t* FindStartCode(const uint8_t* stream, int32_t streamLength, FindMo
 
     const int32_t searchLength = streamLength - searchOffset;
 
-#ifdef _WIN64
+#if defined(_WIN64) && defined(_M_X64)
 
     // If the search range is small or the `stream` pointer is not 16-byte-aligned then use the simple method.
     if (searchLength < 32 || ptrdiff_t(stream) % 16 != 0) {
