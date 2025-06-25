@@ -71,4 +71,10 @@
     </BuildLog>
   </ItemDefinitionGroup>
 
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+
 </Project>
