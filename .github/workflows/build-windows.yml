@@ -47,18 +47,18 @@ jobs:
       run: |
         $version = (python scripts\get-version-from-sources.py)
         Write-Output "VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-        pkg/nsis/build-installer.ps1 -${{ inputs.target }} -NoPause -NoLowPriority
+        pkg/nsis/build-installer.ps1 -${{ inputs.target || 'Win64' }} -NoPause -NoLowPriority
 
     - name: Upload installer
       uses: actions/upload-artifact@v4
       with:
         name: installer
-        path: pkg/installers/TSDuck-${{ inputs.target }}-${{ env.VERSION }}.exe
+        path: pkg/installers/TSDuck-${{ inputs.target || 'Win64' }}-${{ env.VERSION }}.exe
         retention-days: 5
 
     - name: Upload portable
       uses: actions/upload-artifact@v4
       with:
         name: portable
-        path: pkg/installers/TSDuck-${{ inputs.target }}-${{ env.VERSION }}-Portable.zip
+        path: pkg/installers/TSDuck-${{ inputs.target || 'Win64' }}-${{ env.VERSION }}-Portable.zip
         retention-days: 5
